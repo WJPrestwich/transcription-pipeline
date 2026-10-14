@@ -1,0 +1,43 @@
+[project]
+name = "youtube-transcription"
+version = "0.1.0"
+description = "Download audio from YouTube videos and transcribe with whisperx"
+requires-python = ">=3.13"
+dependencies = [
+    "click>=8.2",
+    "fastmcp>=3.0",
+    "pydantic>=2.11",
+    "pydantic-settings>=2.9",
+    "sqlalchemy[asyncio]>=2.0",
+    "asyncpg>=0.30",
+    "whisperx>=3.3",
+    "torch>=2.1",
+    "demucs>=4.0",
+    # torchaudio's WAV save backend (used by demucs save_audio); previously
+    # arrived transitively via nemo_toolkit
+    "soundfile>=0.12",
+    "torchaudio>=2.1",
+    "rich>=15.0.0",
+]
+
+[project.scripts]
+youtube-transcription = "youtube_transcription.cli:cli"
+youtube-transcription-server = "youtube_transcription.server:main"
+
+[tool.ruff]
+target-version = "py313"
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "pytest-asyncio>=1.4.0",
+    "testcontainers[postgres]>=4.14.2",
+]
